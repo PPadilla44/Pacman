@@ -1,18 +1,12 @@
 console.log("WORKING")
 
 var sidelength = 8 //(Math.floor(Math.random()*30)+10);
-var row = [];
-var map = [];
-var col = [];
+
+var tempWorld = [];
+var world = [];
+
 console.log(sidelength)
-var arry = [
-    [1,1,1,1,1],
-    [1,0,0,0,1],
-    [1,0,0,0,1],   
-    [1,0,0,0,1],
-    [1,1,1,1,1],
-];
-console.log(arry)
+
 
 function buildMap(){
 // this will loop through each row
@@ -21,48 +15,32 @@ function buildMap(){
 // i[j,j,j,j,j,j]
 // i[j,j,j,j,j,j]
 // i[j,j,j,j,j,j] i= sidelength
-    for(let j = 0; j < sidelength; j++) {
-        row.push(1);
-    }
-    console.log(row);
-    for(let j = 0; j < sidelength; j++) {
-        if(j == 0 || j == sidelength-1) {
-            col.push(1);
-        } else{
-            col.push(0);
+    for( let i = 0; i < sidelength; i++) {
+        for( let j = 0; j < sidelength ; j++) {
+            if(i==0 || i == sidelength-1) {
+                tempWorld.push(1);
+            } else {
+                if(j==0 || j == sidelength-1) {
+                    tempWorld.push(1)
+                } else {
+                    tempWorld.push(0)
+                }
+            }
         }
     }
-
-    for(let i = 0; i < sidelength; i ++){
-        if(i == 0 || i == sidelength-1){
-            map.push(row)
-        } else {
-            map.push(col)
-        }
+    while(tempWorld.length > 0) {
+        let temp;
+        temp = tempWorld.splice(0,sidelength);
+        world.push(temp)
     }
-    // for(var i = 0; i < sidelength; i++) {
-    //     if(i == 0 || i == sidelength-1) {
-    //         col.push(1);
-    //         console.log(col)
-    //     } else{
-    //         col.push(0);
-    //         console.log(col)
-
-    //     }
-    //     map.push(col);
-
-    //     if(i==0 || i == sidelength-1){
-    //         map[i] = row;
-    //     }  
-    // }
+    console.table(world);
 }
-
-
 
 
 var mapDict = {
     0 : 'free',
     1 : 'wall',
+    2 : 'coin'
 }
 
 var pacman = {
@@ -108,7 +86,7 @@ function stopMovin() {
 
 function keepMoving(direction) {
     if(direction == 37) {
-        if(map[pacman.y][pacman.x-1] != 1) {
+        if(world[pacman.y][pacman.x-1] != 1) {
             stopMovin();
             console.log("stopped x: " + pacman.x);
         } else {
@@ -149,20 +127,7 @@ function keepMoving(direction) {
 function game() {
 // drawPacman();
 
-
     buildMap();
-    console.table(map)
-    
-    map[2][2] = 9
-
-    console.table(map)
-
-    console.table(arry)
-    
-    arry[2][2] = 9
-
-    console.table(arry)
-    
 
 
 
