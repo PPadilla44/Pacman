@@ -1,17 +1,8 @@
-var map = [];
-var arry = [];
+var map = new Array(8);
 
-for(var i = 0; i < 5 ; i++) {
-    if(i == 0 || i ==4) {
-        arry.push(1);
-    } else{
-        arry.push(0);
+for(var row = 0; row < map.length; row++) {
+    for(var x = 0; x < map.length[row]; x++) {
+        map[row][x] = 0;
     }
-        map.push(arry);
-        if(i==0 || i== 4){
-            map[[i][0]] = [1,1,1,1,1];
-        }  
 }
-
-console.log(map);
-
+console.table(map)

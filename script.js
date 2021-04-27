@@ -1,10 +1,19 @@
 console.log("WORKING")
 
-var sidelength = (Math.floor(Math.random()*30)+10);
+var sidelength = 8 //(Math.floor(Math.random()*30)+10);
 var row = [];
 var map = [];
 var col = [];
 console.log(sidelength)
+var arry = [
+    [1,1,1,1,1],
+    [1,0,0,0,1],
+    [1,0,0,0,1],   
+    [1,0,0,0,1],
+    [1,1,1,1,1],
+];
+console.log(arry)
+
 function buildMap(){
 // this will loop through each row
 // i[j,j,j,j,j,j] i=0
@@ -13,38 +22,48 @@ function buildMap(){
 // i[j,j,j,j,j,j]
 // i[j,j,j,j,j,j] i= sidelength
     for(let j = 0; j < sidelength; j++) {
-        col.push(1);
+        row.push(1);
     }
-    for(var i = 0; i < sidelength; i++) {
-        if(i == 0 || i == sidelength-1) {
-            row.push(1);
+    console.log(row);
+    for(let j = 0; j < sidelength; j++) {
+        if(j == 0 || j == sidelength-1) {
+            col.push(1);
         } else{
-            row.push(0);
+            col.push(0);
         }
-        map.push(row);
-        if(i==0 || i == sidelength-1){
-                map[[i][0]] = col;
-        }  
     }
 
-//     for(var i = 0; i < sidelength; i++) {
-//         for(var j = 0; j <= sidelength; j++) {
-//             if(i==0 || i== sidelength  || j==0 || j == sidelength){
-//                 row[j] = 1;
-//                 }
-//             else {
-//                 row[j] = 0;
-//             }
-//         }
-//         map[i] = row;
-//     }
-// }
+    for(let i = 0; i < sidelength; i ++){
+        if(i == 0 || i == sidelength-1){
+            map.push(row)
+        } else {
+            map.push(col)
+        }
+    }
+    // for(var i = 0; i < sidelength; i++) {
+    //     if(i == 0 || i == sidelength-1) {
+    //         col.push(1);
+    //         console.log(col)
+    //     } else{
+    //         col.push(0);
+    //         console.log(col)
+
+    //     }
+    //     map.push(col);
+
+    //     if(i==0 || i == sidelength-1){
+    //         map[i] = row;
+    //     }  
+    // }
 }
 
 
 
-buildMap();
-console.log(map);
+
+var mapDict = {
+    0 : 'free',
+    1 : 'wall',
+}
 
 var pacman = {
     x: 1,
@@ -86,45 +105,67 @@ function stopMovin() {
     console.log("STOPPED")
 }
 
+
 function keepMoving(direction) {
     if(direction == 37) {
-        console.log("LEFT")
-        if(pacman.x <= 1) {
+        if(map[pacman.y][pacman.x-1] != 1) {
             stopMovin();
+            console.log("stopped x: " + pacman.x);
         } else {
             pacman.x--;
-            console.log(pacman.x);
+            console.log("x: " + pacman.x);
         }
     }  if(direction == 39) {
-        console.log("RIGHT")
-        if(pacman.x >= sidelength-1) {
+        if(pacman.x + 1 > sidelength - 2) {
             stopMovin();
+            console.log("stopped x: " + pacman.x);
+
         } else {
             pacman.x++;
-            console.log(pacman.x);
+            console.log("x: " + pacman.x);
         }
-    }if(direction == 38) {
-        console.log("DOWN")
-        if(pacman.y <= 1) {
+    }  if(direction == 38) {
+        if( pacman.y - 1 < 1) {
             stopMovin();
+            console.log("stopped y: " + pacman.x);
+
         } else {
             pacman.y--;
-            console.log(pacman.y);
+            console.log("y: " + pacman.y);
         }
     }  if(direction == 40) {
-        console.log("UP")
-        if(pacman.y >= sidelength-1) {
+        if(pacman.y + 1 > sidelength - 2) {
             stopMovin();
+            console.log("stopped y: " + pacman.y);
+
         } else {
             pacman.y++;
-            console.log(pacman.y);
+            console.log("y: " + pacman.y);
         }
     }
 }
 
 
 function game() {
+// drawPacman();
+
+
+    buildMap();
+    console.table(map)
     
-    drawPacman();
+    map[2][2] = 9
+
+    console.table(map)
+
+    console.table(arry)
+    
+    arry[2][2] = 9
+
+    console.table(arry)
+    
+
+
 
 }
+
+game();
