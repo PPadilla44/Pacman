@@ -80,13 +80,21 @@ console.log(docPacman);
 
 function drawPacman() {
     docPacman.style.top = (pacman.y * 20) + "px";
+    docPacman.style.top = ((pacman.y * 20) + .25) + "px";
+    docPacman.style.top = ((pacman.y * 20) + .5) + "px";
+    docPacman.style.top = ((pacman.y * 20) + .75) + "px";
+
     docPacman.style.left = (pacman.x *20) + "px";
-    }
+    docPacman.style.left = ((pacman.x *20) +.25) + "px";
+    docPacman.style.left = ((pacman.x * 20) + .5) + "px";
+    docPacman.style.left = ((pacman.x * 20) + .75) + "px";
+
+}
 
 
 
     world[pacman.y][pacman.x] = 0;
-    drawPacman()
+    drawPacman();
 
 
     var moving;
@@ -97,25 +105,25 @@ document.onkeydown = function(e) {
         //LEFT
         stopMovin();
         docPacman.style.transform = "rotate(180deg)"
-        moving = setInterval(keepMoving,125,37);
+        moving = setInterval(keepMoving,100,37);
         console.log(e.keyCode)  
     } if(e.keyCode == 39) {
         //RIGHT
         stopMovin();
         docPacman.style.transform = "rotate(0deg)"
-        moving = setInterval(keepMoving,125,39);
+        moving = setInterval(keepMoving,100,39);
         console.log(e.keyCode)
     } else if(e.keyCode == 38) {
         //DOWN
         stopMovin();
         docPacman.style.transform = "rotate(270deg)"
-        moving = setInterval(keepMoving,125,38);
+        moving = setInterval(keepMoving,100,38);
         console.log(e.keyCode)
     } else if(e.keyCode== 40) {
         //UP
         stopMovin();
         docPacman.style.transform = "rotate(90deg)"
-        moving = setInterval(keepMoving,125,40);
+        moving = setInterval(keepMoving,100,40);
         console.log(e.keyCode)
     }
 }
@@ -165,7 +173,7 @@ function keepMoving(direction) {
     updateMap();
 }
 
-setInterval(game, 1)
+setInterval(game, 10)
 function game() {
     
     //drawWorld();
