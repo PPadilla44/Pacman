@@ -1,6 +1,6 @@
 console.log("WORKING")
 
-var sidelength = 50//(Math.floor(Math.random()*80)+50);
+var sidelength = 30//(Math.floor(Math.random()*80)+50);
 
 var tempWorld = [];
 var world = [];
@@ -79,8 +79,8 @@ var docPacman = document.getElementById("pacman");
 console.log(docPacman);
 
 function drawPacman() {
-    docPacman.style.top = (pacman.y * 10) + "px";
-    docPacman.style.left = (pacman.x * 10) + "px";
+    docPacman.style.top = (pacman.y * 20) + "px";
+    docPacman.style.left = (pacman.x *20) + "px";
     }
 
 
@@ -97,25 +97,25 @@ document.onkeydown = function(e) {
         //LEFT
         stopMovin();
         docPacman.style.transform = "rotate(180deg)"
-        moving = setInterval(keepMoving,35,37);
+        moving = setInterval(keepMoving,125,37);
         console.log(e.keyCode)  
     } if(e.keyCode == 39) {
         //RIGHT
         stopMovin();
         docPacman.style.transform = "rotate(0deg)"
-        moving = setInterval(keepMoving,35,39);
+        moving = setInterval(keepMoving,125,39);
         console.log(e.keyCode)
     } else if(e.keyCode == 38) {
         //DOWN
         stopMovin();
         docPacman.style.transform = "rotate(270deg)"
-        moving = setInterval(keepMoving,35,38);
+        moving = setInterval(keepMoving,125,38);
         console.log(e.keyCode)
     } else if(e.keyCode== 40) {
         //UP
         stopMovin();
         docPacman.style.transform = "rotate(90deg)"
-        moving = setInterval(keepMoving,35,40);
+        moving = setInterval(keepMoving,125,40);
         console.log(e.keyCode)
     }
 }
@@ -165,7 +165,7 @@ function keepMoving(direction) {
     updateMap();
 }
 
-setInterval(game, 10)
+setInterval(game, 1)
 function game() {
     
     //drawWorld();

@@ -9,8 +9,8 @@
 }
 
 .pacman {
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
     display: inline-block;
     position: absolute;
     z-index: 1000;
@@ -18,15 +18,15 @@
 
 .wall {
     background-color: blue;
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
     display: inline-block;
 }
 
 .free {
     background-color: black;
-    height: 10px;
-    width: 10px;
+    height: 20px;
+    width: 20px;
     display: inline-block;
 }
 
@@ -35,8 +35,9 @@
 }
 
 .coin {
-    background-color: yellow;
-    height: 10px;
-    width: 10px;
+    background-image: url("assets/coin.gif");
+    background-color: black;
+    height: 20px;
+    width: 20px;
     display: inline-block;
 }
