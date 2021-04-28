@@ -4,13 +4,32 @@
 }
 
 .ghost {
-    width: 40px;
-    height: 40px;
+    width: 10px;
+    height: 10px;
 }
 
 .pacman {
-    height: 40px;
-    width: 40px;
-    position: absolute;
+    height: 10px;
+    width: 10px;
     display: inline-block;
+    position: absolute;
+    z-index: 1000;
+}
+
+.wall {
+    background-color: blue;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+}
+
+.free {
+    background-color: black;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+}
+
+.row {
+    display:flex;
 }

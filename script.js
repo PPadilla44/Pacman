@@ -5,6 +5,13 @@ var sidelength = 100//(Math.floor(Math.random()*80)+50);
 var tempWorld = [];
 var world = [];
 
+var mapDict = {
+    0 : 'free',
+    1 : 'wall',
+    2 : 'coin'
+}
+
+
 console.log(sidelength)
 
 
@@ -15,6 +22,7 @@ function buildMap(){
 // i[j,j,j,j,j,j]
 // i[j,j,j,j,j,j]
 // i[j,j,j,j,j,j] i= sidelength
+var output = "";
     for( let i = 0; i < sidelength; i++) {
         for( let j = 0; j < sidelength ; j++) {
             if(i==0 || i == sidelength-1) {
@@ -35,15 +43,23 @@ function buildMap(){
     }
     console.table(world)
 }
+
 buildMap();
 
-
-
-var mapDict = {
-    0 : 'free',
-    1 : 'wall',
-    2 : 'coin'
+function drawWorld(){
+    output = "";
+    for (var row = 0; row < sidelength; row++){
+        output += "<div class = 'row'>"
+            for (var x = 0; x < sidelength; x++){
+                output += "<div class = '" + mapDict[world[row][x]] +"'></div>"
+            }
+            output += "</div>"
+    }
+    document.getElementById('world').innerHTML = output;
 }
+
+drawWorld();
+
 
 
 var pacman = {
@@ -51,11 +67,20 @@ var pacman = {
     y: Math.floor(sidelength/2),
 }
 
+console.log(pacman.x);
+console.log(pacman.y);
+
 var docPacman = document.getElementById("pacman");
+
+console.log(docPacman);
+
 function drawPacman() {
     docPacman.style.top = (pacman.y * 10) + "px";
     docPacman.style.left = (pacman.x * 10) + "px";
     }
+
+
+
     world[pacman.y][pacman.x] = 0;
     drawPacman()
 
@@ -68,22 +93,26 @@ document.onkeydown = function(e) {
         //LEFT
         stopMovin();
         docPacman.style.transform = "rotate(180deg)"
-        moving = setInterval(keepMoving,25,37);  
+        moving = setInterval(keepMoving,25,37);
+        console.log(e.keyCode)  
     } if(e.keyCode == 39) {
         //RIGHT
         stopMovin();
         docPacman.style.transform = "rotate(0deg)"
         moving = setInterval(keepMoving,25,39);
+        console.log(e.keyCode)
     } else if(e.keyCode == 38) {
         //DOWN
         stopMovin();
         docPacman.style.transform = "rotate(270deg)"
         moving = setInterval(keepMoving,25,38);
-    } else if(e.keyCode == 40) {
+        console.log(e.keyCode)
+    } else if(e.keyCode== 40) {
         //UP
         stopMovin();
         docPacman.style.transform = "rotate(90deg)"
         moving = setInterval(keepMoving,25,40);
+        console.log(e.keyCode)
     }
 }
 
@@ -133,6 +162,7 @@ function keepMoving(direction) {
 
 setInterval(game, 10)
 function game() {
+    //drawWorld();
     world[pacman.y][pacman.x] = 0
     drawPacman();
 //  buildMap();
