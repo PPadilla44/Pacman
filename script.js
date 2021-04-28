@@ -1,6 +1,6 @@
 console.log("WORKING")
 
-var sidelength = 8 //(Math.floor(Math.random()*30)+10);
+var sidelength = 100//(Math.floor(Math.random()*80)+50);
 
 var tempWorld = [];
 var world = [];
@@ -33,8 +33,10 @@ function buildMap(){
         temp = tempWorld.splice(0,sidelength);
         world.push(temp)
     }
-    console.table(world);
+    console.table(world)
 }
+buildMap();
+
 
 
 var mapDict = {
@@ -43,16 +45,19 @@ var mapDict = {
     2 : 'coin'
 }
 
+
 var pacman = {
-    x: 1,
-    y: 1,
+    x: Math.floor(sidelength/2),
+    y: Math.floor(sidelength/2),
 }
 
+var docPacman = document.getElementById("pacman");
 function drawPacman() {
-    
-    document.getElementById("pacman")
-
+    docPacman.style.top = (pacman.y * 10) + "px";
+    docPacman.style.left = (pacman.x * 10) + "px";
     }
+    drawPacman()
+
 
     var moving;
     //movement pacman
@@ -61,32 +66,34 @@ document.onkeydown = function(e) {
     if(e.keyCode == 37) {
         //LEFT
         stopMovin();
-        moving = setInterval(keepMoving,100,37);  
+        docPacman.style.transform = "rotate(180deg)"
+        moving = setInterval(keepMoving,25,37);  
     } if(e.keyCode == 39) {
         //RIGHT
         stopMovin();
-        moving = setInterval(keepMoving,100,39);
+        docPacman.style.transform = "rotate(0deg)"
+        moving = setInterval(keepMoving,25,39);
     } else if(e.keyCode == 38) {
         //DOWN
         stopMovin();
-        moving = setInterval(keepMoving,100,38);
+        docPacman.style.transform = "rotate(270deg)"
+        moving = setInterval(keepMoving,25,38);
     } else if(e.keyCode == 40) {
         //UP
         stopMovin();
-        moving = setInterval(keepMoving,100,40);
+        docPacman.style.transform = "rotate(90deg)"
+        moving = setInterval(keepMoving,25,40);
     }
 }
 
 
 function stopMovin() {
     clearInterval(moving);
-    console.log("STOPPED")
 }
-
-
+//world [Y-VALUE] [X-VALUE]
 function keepMoving(direction) {
     if(direction == 37) {
-        if(world[pacman.y][pacman.x-1] != 1) {
+        if(world[pacman.y][pacman.x-1] == 1) {
             stopMovin();
             console.log("stopped x: " + pacman.x);
         } else {
@@ -94,16 +101,15 @@ function keepMoving(direction) {
             console.log("x: " + pacman.x);
         }
     }  if(direction == 39) {
-        if(pacman.x + 1 > sidelength - 2) {
+        if(world[pacman.y][pacman.x+1] == 1) {
             stopMovin();
             console.log("stopped x: " + pacman.x);
-
         } else {
             pacman.x++;
             console.log("x: " + pacman.x);
         }
     }  if(direction == 38) {
-        if( pacman.y - 1 < 1) {
+        if(world[pacman.y-1][pacman.x] == 1) {
             stopMovin();
             console.log("stopped y: " + pacman.x);
 
@@ -112,7 +118,7 @@ function keepMoving(direction) {
             console.log("y: " + pacman.y);
         }
     }  if(direction == 40) {
-        if(pacman.y + 1 > sidelength - 2) {
+        if(world[pacman.y+1][pacman.x] == 1) {
             stopMovin();
             console.log("stopped y: " + pacman.y);
 
@@ -123,14 +129,9 @@ function keepMoving(direction) {
     }
 }
 
-
+setInterval(game, 10)
 function game() {
-// drawPacman();
-
-    buildMap();
-
-
+    drawPacman();
+//  buildMap();
 
 }
-
-game();
