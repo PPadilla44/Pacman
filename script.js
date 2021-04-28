@@ -56,6 +56,7 @@ function drawPacman() {
     docPacman.style.top = (pacman.y * 10) + "px";
     docPacman.style.left = (pacman.x * 10) + "px";
     }
+    world[pacman.y][pacman.x] = 0;
     drawPacman()
 
 
@@ -90,6 +91,7 @@ document.onkeydown = function(e) {
 function stopMovin() {
     clearInterval(moving);
 }
+
 //world [Y-VALUE] [X-VALUE]
 function keepMoving(direction) {
     if(direction == 37) {
@@ -131,6 +133,7 @@ function keepMoving(direction) {
 
 setInterval(game, 10)
 function game() {
+    world[pacman.y][pacman.x] = 0
     drawPacman();
 //  buildMap();
 
