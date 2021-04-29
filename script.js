@@ -3,6 +3,7 @@ console.log("WORKING")
 
 
 var tempWorld = [];
+var count = 0;
 
 var world = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -54,16 +55,21 @@ function drawWorld(){
 
 drawWorld();
 
-function updateMap(){
-    world[Math.round(pacman.y)][Math.round(pacman.x)] = 1;
-    drawWorld();
-}
+
 
 var pacman = {
     x: 9,
     y: 15,
 }
 
+function updateMap(){
+    if(world[Math.round(pacman.y)][Math.round(pacman.x)] == 2){
+        count++;
+        document.getElementById("score").innerHTML = count;
+    }
+    world[Math.round(pacman.y)][Math.round(pacman.x)] = 1;
+    drawWorld();
+}
 
 
 //movement pacman
