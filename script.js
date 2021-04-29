@@ -1,10 +1,34 @@
 console.log("WORKING")
 
-var sidelength = 20//(Math.floor(Math.random()*80)+50);
+
 
 var tempWorld = [];
-var world = [];
 
+var world = [
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,0],
+    [0,2,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,2,0],
+    [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+    [0,2,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,2,0],
+    [0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0],
+    [0,0,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,0,0],
+    [0,0,0,0,2,0,2,2,2,2,2,2,2,0,2,0,0,0,0],
+    [0,0,0,0,2,0,2,0,0,2,0,0,2,0,2,0,0,0,0],
+    [2,2,2,2,2,2,2,0,2,2,2,0,2,2,2,2,2,2,2],
+    [0,0,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,0,0],
+    [0,0,0,0,2,0,2,2,2,2,2,2,2,0,2,0,0,0,0],
+    [0,0,0,0,2,0,2,0,0,0,0,0,2,0,2,0,0,0,0],
+    [0,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,0],
+    [0,2,0,0,2,0,0,0,2,0,2,0,0,0,2,0,0,2,0],
+    [0,2,2,0,2,2,2,2,2,2,2,2,2,2,2,0,2,2,0],
+    [0,0,2,0,2,0,2,0,0,0,0,0,2,0,2,0,2,0,0],
+    [0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0],
+    [0,2,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,2,0],
+    [0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+]
+
+var sidelength = world.length //(Math.floor(Math.random()*30)+20);
 var mapDict = {
     0 : 'wall',
     1 : 'free',
@@ -15,36 +39,6 @@ var mapDict = {
 console.log(sidelength)
 
 
-function buildMap(){
-// this will loop through each row
-// i[j,j,j,j,j,j] i=0
-// i[j,j,j,j,j,j]
-// i[j,j,j,j,j,j]
-// i[j,j,j,j,j,j]
-// i[j,j,j,j,j,j] i= sidelength
-var output = "";
-    for( let i = 0; i < sidelength; i++) {
-        for( let j = 0; j < sidelength ; j++) {
-            if(i==0 || i == sidelength-1) {
-                tempWorld.push(0);
-            } else {
-                if(j==0 || j == sidelength-1) {
-                    tempWorld.push(0)
-                } else {
-                    tempWorld.push(Math.floor(Math.random()*2)+1);
-                }
-            }
-        }
-    }
-    while(tempWorld.length > 0) {
-        let temp;
-        temp = tempWorld.splice(0,sidelength);
-        world.push(temp)
-    }
-    console.table(world)
-}
-
-buildMap();
 
 function drawWorld(){
     output = "";
@@ -66,11 +60,13 @@ function updateMap(){
 }
 
 var pacman = {
-    x: sidelength/2,
-    y: sidelength/2,
+    x: 9,
+    y: 15,
 }
 
 
+
+//movement pacman
 var docPacman = document.getElementById("pacman");
 
 function drawPacman() {
@@ -80,8 +76,6 @@ function drawPacman() {
 }
 drawPacman();
 
-
-//movement pacman
 
 var moving;
 document.onkeydown = function(e) {
@@ -170,7 +164,6 @@ document.onkeydown = function(e) {
 setInterval(game, 10)
 function game() {
     
-    //drawWorld();
     updateMap();
 
     drawPacman();
