@@ -36,7 +36,6 @@ var output = "";
             }
         }
     }
-    console.table(tempWorld)
     while(tempWorld.length > 0) {
         let temp;
         temp = tempWorld.splice(0,sidelength);
@@ -79,79 +78,90 @@ function drawPacman() {
     docPacman.style.left = (pacman.x * 20) + "px";
 
 }
+drawPacman();
 
-    drawPacman();
 
+//movement pacman
 
-    var moving;
-    //movement pacman
+var moving;
 document.onkeydown = function(e) {
+
     if(e.keyCode == 37) {
         //LEFT
         pacman.y = Math.round(pacman.y)
         clearInterval(moving)
         docPacman.style.transform = "rotate(180deg)"
         moving = setInterval(function() {
-            if(pacman.x.toFixed(1) % 1 == 0) {
-                if(world[pacman.y][Math.round(pacman.x) - 1] == 0) {
+            if(pacman.x % 1 == 0) {
+                if(world[pacman.y][pacman.x - 1] == 0) {
                     clearInterval(moving);
                 } else {
                     pacman.x-=0.10
+                    pacman.x = Math.round(10 * pacman.x) / 10
                 }
             } else {
                 pacman.x-=0.10;
+                pacman.x = Math.round(10 * pacman.x) / 10
             }
         }, 10)
     } 
+
     if(e.keyCode == 39) {
         //RIGHT
         pacman.y = Math.round(pacman.y)
         clearInterval(moving)
         docPacman.style.transform = "rotate(0deg)"
         moving = setInterval(function() {
-            if(pacman.x.toFixed(1) % 1 == 0) {
-                if(world[pacman.y][Math.floor(pacman.x) + 1] == 0) {
+            if(pacman.x  % 1 == 0) {
+                if(world[pacman.y][pacman.x + 1] == 0) {
                     clearInterval(moving);
                 } else{
                     pacman.x+=0.10
+                    pacman.x = Math.round(10 * pacman.x) / 10
                 }
             } else {
                 pacman.x+=0.10;
+                pacman.x = Math.round(10 * pacman.x) / 10
             }
         }, 10)
     } 
+
     if(e.keyCode == 38) {
         //UP
         pacman.x = Math.round(pacman.x)
         clearInterval(moving)
         docPacman.style.transform = "rotate(270deg)"
         moving = setInterval(function() {
-            if(pacman.y.toFixed(1) % 1 == 0) {
-                if(world[Math.round(pacman.y) - 1][pacman.x] == 0) {
+            if(pacman.y % 1 == 0) {
+                if(world[pacman.y - 1][pacman.x] == 0) {
                     clearInterval(moving);
                 } else {
-                    pacman.y-=.10
+                    pacman.y -= 0.10;
+                    pacman.y = Math.round(10 * pacman.y) / 10
                 }
             } else {
-                pacman.y-=0.10;
+                pacman.y -= 0.10;
+                pacman.y =  Math.round(10 * pacman.y) / 10
             }
         }, 10)
     }
+
     if(e.keyCode== 40) {
         //DOWN
         pacman.x = Math.round(pacman.x)
         clearInterval(moving)
         docPacman.style.transform = "rotate(90deg)"
         moving = setInterval(function() {
-            if(pacman.y.toFixed(1) % 1 == 0) {
-                if(world[Math.floor(pacman.y) + 1][pacman.x] == 0) {
+            if(pacman.y % 1 == 0) {
+                if(world[pacman.y + 1][pacman.x] == 0) {
                     clearInterval(moving);
-                    console.log("STOPPED")
                 } else {
                     pacman.y+= 0.10;
+                    pacman.y = Math.round(10 * pacman.y) / 10
                 }
             } else {
                 pacman.y+=0.10;
+                pacman.y = Math.round(10 * pacman.y) / 10
             }
         }, 10)
     }
@@ -164,6 +174,5 @@ function game() {
     updateMap();
 
     drawPacman();
-
 
 }
