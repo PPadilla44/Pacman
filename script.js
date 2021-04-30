@@ -14,9 +14,9 @@ var world = [
     [0,2,2,2,2,0,2,2,2,0,2,2,2,0,2,2,2,2,0],
     [0,0,0,0,2,0,0,0,1,0,1,0,0,0,2,0,0,0,0],
     [0,0,0,0,2,0,1,1,1,1,1,1,1,0,2,0,0,0,0],
-    [0,0,0,0,2,0,1,3,3,1,3,3,1,0,2,0,0,0,0],
-    [2,2,2,2,2,1,1,3,1,1,1,3,1,1,2,2,2,2,2],
-    [0,0,0,0,2,0,1,3,3,3,3,3,1,0,2,0,0,0,0],
+    [0,0,0,0,2,0,1,1,1,1,1,1,1,0,2,0,0,0,0],
+    [2,2,2,2,2,1,1,1,1,1,1,1,1,1,2,2,2,2,2],
+    [0,0,0,0,2,0,1,1,1,1,1,1,1,0,2,0,0,0,0],
     [0,0,0,0,2,0,1,1,1,1,1,1,1,0,2,0,0,0,0],
     [0,0,0,0,2,0,1,0,0,0,0,0,1,0,2,0,0,0,0],
     [0,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,0],
@@ -182,24 +182,25 @@ document.onkeydown = function(e) {
 
 
 var blueGhost =  {
-    x: 8,
-    y: 9,
+    x: 1,
+    y: 19,
 }
 
 var greenGhost =  {
-    x: 9,
-    y: 9,
+    x: 17,
+    y: 1,
 }
 
 var yellowGhost =  {
-    x: 10,
-    y: 9,
+    x: 17,
+    y: 19,
 }
 
 var redGhost =  {
     x: 1,
     y: 1,
 }
+
 
 function drawGhost(docGhost, Ghostmov) {
     var drawGhost = document.getElementById(docGhost);
@@ -216,57 +217,51 @@ function drawAllGhost() {
 }
 drawAllGhost();
 
-var attackPoint = {
-    x: pacman.x,
-    y: pacman.y,
-}
-
-//use pacmans last postition to create point to follow
-var target;
-function targetPosition(){
-    target = setInterval(function() {
-        // attackPoint.x = Math.round(pacman.x);
-        // attackPoint.y = Math.round(pacman.y);
-        console.log(attackPoint)
-    }, 1000)
-}
-targetPosition();
 
 var redMove;
-function moveRedGhost() {
+function moveAllGhost(ghost) {
     
-    if(redGhost.y < pacman.y) {
-        if(world[Math.round(redGhost.y)+1][Math.round(redGhost.x)] != 0){
-            redGhost.y+=.03
-        }
+    if(ghost.y < pacman.y) {
+        if(world[Math.round(ghost.y)+1][Math.round(ghost.x)] != 0 &&
+        world[Math.round(ghost.y)+1][Math.round(ghost.x)] != 3){
+            ghost.y++;
+        } 
     }
     
-     if(redGhost.x < pacman.x) {
-        if(world[Math.round(redGhost.y)][Math.round(redGhost.x)+1] != 0){
-                redGhost.x+=.03
+    if(ghost.x < pacman.x) {
+        if(world[Math.round(ghost.y)][Math.round(ghost.x)+1] != 0 &&
+        world[Math.round(ghost.y)][Math.round(ghost.x)+1] != 3){
+                ghost.x++;
             }
         }
     
-    if(redGhost.y > pacman.y) {
-        if(world[Math.round(redGhost.y)-1][Math.round(redGhost.x)] != 0){
-            redGhost.y-=.03;
+    if(ghost.y > pacman.y) {
+        if(world[Math.round(ghost.y)-1][Math.round(ghost.x)] != 0 &&
+        world[Math.round(ghost.y)-1][Math.round(ghost.x)] != 3){
+
+            ghost.y--;
         }
     }
 
-    if(redGhost.x > pacman.x) {
-        if(world[Math.round(redGhost.y)][Math.round(redGhost.x)-1] != 0){
-            redGhost.x-=.03;
+    if(ghost.x > pacman.x) {
+        if(world[Math.round(ghost.y)][Math.round(ghost.x)-1] != 0 &&
+        world[Math.round(ghost.y)][Math.round(ghost.x)-1] != 0){
+
+            ghost.x--;
         }
     }
-    // console.log("x: " + redGhost.x)
-    // console.log("y: " + redGhost.y)
+  
 
 }
+var ghostMove = setInterval(function() {
+    moveAllGhost(redGhost);
+    moveAllGhost(yellowGhost);
+    moveAllGhost(blueGhost);
+    moveAllGhost(greenGhost);
+},400)
 
-            
 
-
-var fps = setInterval(game, 10)
+var fps = setInterval(game, 1000/60)
 function game() {
     
     updateMap();
@@ -275,9 +270,41 @@ function game() {
 
     drawAllGhost();
 
-    moveRedGhost();
 
-    if(pacman.x == redGhost.x && pacman.y == redGhost.y) {
-        clearInterval(fps)
+    die(redGhost);
+    die(blueGhost);
+    die(yellowGhost);
+    die(greenGhost);
+
+    resGhost(redGhost,blueGhost);
+    resGhost(redGhost,yellowGhost);
+    resGhost(redGhost,greenGhost);;
+    resGhost(blueGhost,yellowGhost);
+    resGhost(blueGhost,greenGhost);
+    resGhost(yellowGhost,greenGhost);
+
+   
+
+    if(count == 158) {
+        clearInterval(fps);
+        var victory = document.getElementById("victory");
+        victory.style.visibility = "visible"
+    }
+
+}
+
+
+
+function die(Ghost) {
+    if(pacman.x == Ghost.x && pacman.y == Ghost.y) {
+        clearInterval(fps);
+        var victory = document.getElementById("gameover");
+        victory.style.visibility = "visible"
+    }
+}
+function resGhost(Ghost1, Ghost2) {
+    if(Ghost1.x == Ghost2.x && Ghost1.y == Ghost2.y) {
+        Ghost1.x = 9;
+        Ghost1.y = 9;
     }
 }
