@@ -197,8 +197,8 @@ var yellowGhost =  {
 }
 
 var redGhost =  {
-    x: 9,
-    y: 8,
+    x: 1,
+    y: 1,
 }
 
 function drawGhost(docGhost, Ghostmov) {
@@ -225,8 +225,8 @@ var attackPoint = {
 var target;
 function targetPosition(){
     target = setInterval(function() {
-        attackPoint.x = Math.round(pacman.x);
-        attackPoint.y = Math.round(pacman.y);
+        // attackPoint.x = Math.round(pacman.x);
+        // attackPoint.y = Math.round(pacman.y);
         console.log(attackPoint)
     }, 1000)
 }
@@ -235,52 +235,34 @@ targetPosition();
 var redMove;
 function moveRedGhost() {
     
-    if(redGhost.y > attackPoint.y) {
-            redMove = setInterval(function(){
-                    console.log("SHOULD MOVE UP")
-                    if(world[Math.ceil(redGhost.y) - 1][Math.floor(redGhost.x)] == 0 
-                    || world[Math.ceil(redGhost.y) - 1][Math.floor(redGhost.x)] == 3 || (redGhost.y < attackPoint.y)){
-                        clearInterval(redMove);
-                        console.log("RED")
-                        if(redGhost.x < attackPoint.x) {
-                            redMove = setInterval(function(){
-                                console.log("SHOULD MOVE RIGHT")
-                                if(world[Math.floor(redGhost.y)][Math.floor(redGhost.x)+1] == 0 
-                                || world[Math.floor(redGhost.y)][Math.floor(redGhost.x) + 1] == 3 || (redGhost.x > attackPoint.x)){
-                                    clearInterval(redMove) 
-                                } else{    
-                                    redGhost.x+=0.10;
-                                    redGhost.x = Math.round(10 * redGhost.x) / 10
-                                }
-                            },100)
-                        }
-
-                    } else{    
-                        redGhost.y-=0.10;
-                        redGhost.y = Math.round(10 * redGhost.y) / 10
-
-                    }
-                },100)
-            }
-
-
-    if(redGhost.y < attackPoint.y) {
-        redMove = setInterval(function(){
-                console.log("SHOULD MOVE DOWN")
-
-                if(world[Math.floor(redGhost.y) + 1][Math.floor(redGhost.x)] == 0 
-                || world[Math.floor(redGhost.y) + 1][Math.floor(redGhost.x)] == 3 || (redGhost.y > attackPoint.y)){
-                    clearInterval(redMove) 
-                    moveRedGhost()
-                } else{    
-                    redGhost.y+=0.10;
-                    redGhost.y = Math.round(10 * redGhost.y) / 10
-                }
-            },100)
+    if(redGhost.y < pacman.y) {
+        if(world[Math.round(redGhost.y)+1][Math.round(redGhost.x)] != 0){
+            redGhost.y+=.03
         }
+    }
+    
+     if(redGhost.x < pacman.x) {
+        if(world[Math.round(redGhost.y)][Math.round(redGhost.x)+1] != 0){
+                redGhost.x+=.03
+            }
+        }
+    
+    if(redGhost.y > pacman.y) {
+        if(world[Math.round(redGhost.y)-1][Math.round(redGhost.x)] != 0){
+            redGhost.y-=.03;
+        }
+    }
+
+    if(redGhost.x > pacman.x) {
+        if(world[Math.round(redGhost.y)][Math.round(redGhost.x)-1] != 0){
+            redGhost.x-=.03;
+        }
+    }
+    // console.log("x: " + redGhost.x)
+    // console.log("y: " + redGhost.y)
+
 }
 
-    moveRedGhost();
             
 
 
@@ -292,6 +274,8 @@ function game() {
     drawPacman();
 
     drawAllGhost();
+
+    moveRedGhost();
 
     if(pacman.x == redGhost.x && pacman.y == redGhost.y) {
         clearInterval(fps)
