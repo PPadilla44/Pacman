@@ -80,15 +80,13 @@ var docPacman = document.getElementById("pacman");
 function drawPacman() {
     docPacman.style.top = (pacman.y * 20) + "px";
     docPacman.style.left = (pacman.x * 20) + "px";
-
 }
+
 drawPacman();
 
 
 var moving;
 document.onkeydown = function(e) {
-
-    if(e.keyCode == 37 || e.keyCode == 39) 
 
 
     if(e.keyCode == 37) {
